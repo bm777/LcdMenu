@@ -1,6 +1,7 @@
 #ifndef LcdMenu_H
 #define LcdMenu_H
 #include <Arduino.h>
+#include <ArduinoSTL.h>
 #include <LiquidCrystal_I2C.h>
 
 #include "MenuItem.h"
@@ -30,9 +31,9 @@ class LcdMenu {
     //
     unsigned int maxCols;
     //
-    // array of menu items
+    // vector of menu items
     //
-    MenuItem* currentMenuTable;
+    std::vector<MenuItem> currentMenuTable;
     //
     // down arrow (↓)
     //
@@ -101,7 +102,7 @@ class LcdMenu {
     //  Enter:  lcd_Addr = address of the LCD on the I2C bus (default 0x27)
     //          menu     = menu to display
     //
-    void setupLcdWithMenu(uint8_t lcd_Addr, MenuItem* menu);
+    void setupLcdWithMenu(uint8_t lcd_Addr, std::vector<MenuItem> menu);
     //
     // call this function to execute an "up press"
     //

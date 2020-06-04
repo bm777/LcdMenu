@@ -26,7 +26,7 @@ extern MenuItem settingsMenu[];
 
 String password = "";
 
-MenuItem mainMenu[] = {ItemHeader(),
+MenuItem mainMenu[] = {ItemHeader(mainMenu),
                        MenuItem("Start service"),
                        ItemSubMenu("Connect to WiFi", wifiItemsMenu),
                        ItemSubMenu("Settings", settingsMenu),

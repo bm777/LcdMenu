@@ -20,20 +20,24 @@ class MenuItem {
    private:
     char* text = "";
     fptr callback = NULL;
-    MenuItem* subMenu = NULL;
+    std::vector<MenuItem> subMenu;
     byte type = MENU_ITEM_NONE;
 
    public:
     //
     // constructors
     //
-    MenuItem(char* text) : text(text) {}
+    MenuItem(byte type)
+        : type(type) {}
+    MenuItem(char* text)
+        : text(text) {}
     MenuItem(char* text, fptr callback, byte type)
         : text(text), callback(callback), type(type) {}
-    MenuItem(char* text, fptr callback, MenuItem* subMenu, byte type)
+    MenuItem(char* text, fptr callback, std::vector<MenuItem> subMenu,byte type)
         : text(text), callback(callback), subMenu(subMenu), type(type) {}
-    MenuItem(MenuItem* subMenu, byte type) : subMenu(subMenu), type(type) {}
-    MenuItem(char* text, MenuItem* subMenu, byte type)
+    MenuItem(std::vector<MenuItem> subMenu, byte type)
+        : subMenu(subMenu), type(type) {}
+    MenuItem(char* text, std::vector<MenuItem> subMenu, byte type)
         : text(text), subMenu(subMenu), type(type) {}
     MenuItem(char* text, char* value, fptr callbac, byte type)
         : text(text), value(value), callback(callback), type(type) {}
@@ -42,14 +46,14 @@ class MenuItem {
     //
     char* getText() { return text; }
     fptr getCallback() { return callback; }
-    MenuItem* getSubMenu() { return subMenu; }
+    std::vector<MenuItem> getSubMenu() { return subMenu; }
     byte getType() { return type; }
     //
     // setters
     //
     void setText(char* text) { this->text = text; }
     void setCallBack(fptr callback) { this->callback = callback; }
-    void setSubMenu(MenuItem* subMenu) { this->subMenu = subMenu; }
+    void setSubMenu(std::vector<MenuItem> subMenu) { this->subMenu = subMenu; }
     //
     //
     //
@@ -61,18 +65,19 @@ class MenuItem {
 
 class ItemHeader : public MenuItem {
    public:
-    ItemHeader() : MenuItem(this, MENU_ITEM_MAIN_MENU_HEADER) {}
+    ItemHeader(std::vector<MenuItem> parent)
+        : MenuItem(parent, MENU_ITEM_MAIN_MENU_HEADER) {}
 };
 
 class ItemSubHeader : public MenuItem {
    public:
-    ItemSubHeader(MenuItem* parent)
+    ItemSubHeader(std::vector<MenuItem> parent)
         : MenuItem(parent, MENU_ITEM_SUB_MENU_HEADER) {}
 };
 
 class ItemFooter : public MenuItem {
    public:
-    ItemFooter() : MenuItem(NULL, MENU_ITEM_END_OF_MENU) {}
+    ItemFooter() : MenuItem(MENU_ITEM_END_OF_MENU) {}
 };
 
 class ItemInput : public MenuItem {
@@ -83,7 +88,7 @@ class ItemInput : public MenuItem {
 
 class ItemSubMenu : public MenuItem {
    public:
-    ItemSubMenu(char* text, MenuItem* parent)
+    ItemSubMenu(char* text, std::vector<MenuItem> parent)
         : MenuItem(text, parent, MENU_ITEM_SUB_MENU) {}
 };
 

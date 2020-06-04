@@ -15,7 +15,7 @@ LcdMenu::LcdMenu(int maxRows, int maxCols) {
 //  Enter:  lcd_Addr = address of the LCD display on the I2C bus (default 0x27)
 //          menu     = menu to display
 //
-void LcdMenu::setupLcdWithMenu(uint8_t lcd_Addr, MenuItem *menu) {
+void LcdMenu::setupLcdWithMenu(uint8_t lcd_Addr, std::vector<MenuItem> menu) {
     lcd = new LiquidCrystal_I2C(lcd_Addr, maxCols, maxRows);
     lcd->init();
     lcd->backlight();
